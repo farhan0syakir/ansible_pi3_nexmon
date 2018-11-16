@@ -1,0 +1,4 @@
+airodump-ng-oui-update
+airmon-ng start wlan1
+sudo rm /etc/airodump/coba-01.csv
+timeout -sHUP 24h airodump-ng wlan1mon -w /etc/airodump/coba --output-format csv < /dev/null

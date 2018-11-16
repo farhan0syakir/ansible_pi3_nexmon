@@ -1,0 +1,13 @@
+[Unit]
+Description=dump to InfluxDb Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/etc/airodump
+ExecStart=/etc/airodump/run.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

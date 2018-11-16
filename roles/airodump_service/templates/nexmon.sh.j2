@@ -1,0 +1,30 @@
+apt install raspberrypi-kernel-headers git libgmp3-dev gawk qpdf bison flex make -y
+git clone https://github.com/seemoo-lab/nexmon.git
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+cd nexmon/buildtools/isl-0.10
+./configure
+make
+make install
+ln -s /usr/local/lib/libisl.so /usr/lib/arm-linux-gnueabihf/libisl.so.10
+cd "$SCRIPTPATH"
+cd nexmon
+source setup_env.sh
+make
+cd patches/bcm43430a1/7_45_41_46/nexmon/
+make
+make backup-firmware
+make install-firmware
+cd "$SCRIPTPATH"
+cd nexmon/utilities/nexutil/
+make
+make install
+path_driver=`modinfo brcmfmac |grep filename: |awk '{print $2}'`
+mv $path_driver $path_driver".orig"
+get_kernel=`uname -r |awk -F. '{ print $2}'`
+
+if [ $get_kernel == 14 ]
+then 
+    cp /home/pi/nexmon/patches/bcm43430a1/7_45_41_46/nexmon/brcmfmac_4.14.y-nexmon/brcmfmac.ko $path_driver/
+else
+    cp /home/pi/nexmon/patches/bcm43430a1/7_45_41_46/nexmon/brcmfmac_kernel49/brcmfmac.ko $path_driver/
+fi

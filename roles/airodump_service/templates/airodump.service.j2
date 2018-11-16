@@ -1,0 +1,13 @@
+[Unit]
+Description=Airodump Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/etc/airodump
+ExecStart=/etc/airodump/airodump.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

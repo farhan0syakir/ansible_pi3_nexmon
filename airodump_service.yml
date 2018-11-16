@@ -1,0 +1,8 @@
+---
+- name: airodump setup
+  hosts: all
+  user: pi
+  become: yes
+  roles:
+    # - common
+    - airodump_service
