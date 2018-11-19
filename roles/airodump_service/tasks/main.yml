@@ -1,122 +1,149 @@
-- name: create dirctory airodump
-  become: yes
-  file: path=/etc/airodump state=directory
+# - name: create dirctory airodump
+#   become: yes
+#   file: path=/etc/airodump state=directory
 
-- name: Install library pendukung
-  apt: 
-    name: libssl-dev
-    update_cache: yes
-    state: present
+# - name: Install library pendukung
+#   apt: 
+#     name: libssl-dev
+#     update_cache: yes
+#     state: present
 
-- name: Install aircrack
-  apt:
-    name: aircrack-ng
-    update_cache: yes
-    state: present
+# - name: Install aircrack
+#   apt:
+#     name: aircrack-ng
+#     update_cache: yes
+#     state: present
 
-- name: copy library install nexmon
-  template:
-    src: templates/airodump.sh.j2
-    dest: /etc/airodump/airodump.sh
-    mode: a+x
+# - name: copy library install nexmon
+#   template:
+#     src: templates/airodump.sh.j2
+#     dest: /etc/airodump/airodump.sh
+#     mode: a+x
 
-- name: copy library airodump
-  template:
-    src: templates/airodump.sh.j2
-    dest: /etc/airodump/airodump.sh
-    mode: a+x
+# - name: copy library airodump
+#   template:
+#     src: templates/airodump.sh.j2
+#     dest: /etc/airodump/airodump.sh
+#     mode: a+x
 
-- name: copy library logic
-  become: yes
-  template:
-    src: templates/logic.awk.j2
-    dest: /etc/airodump/logic.awk
+# - name: copy library logic
+#   become: yes
+#   template:
+#     src: templates/logic.awk.j2
+#     dest: /etc/airodump/logic.awk
 
-- name: copy library run
-  become: yes
-  template:
-    src: templates/run.sh.j2
-    dest: /etc/airodump/run.sh
-    mode: a+x  
+# - name: copy library run
+#   become: yes
+#   template:
+#     src: templates/run.sh.j2
+#     dest: /etc/airodump/run.sh
+#     mode: a+x  
     
-- name: copy nexmon.sh
-  become: yes
-  template:
-    src: templates/nexmon.sh.j2
-    dest: /etc/nexmon.sh
-    mode: a+x
+# - name: copy nexmon.sh
+#   become: yes
+#   template:
+#     src: templates/nexmon.sh.j2
+#     dest: /etc/nexmon.sh
+#     mode: a+x
 
-- name: reinstall bootloader
-  apt:
-    name: raspberrypi-bootloader
-    force_apt_get: yes
-    update_cache: yes    
-    state: present
+# - name: reinstall bootloader
+#   apt:
+#     name: raspberrypi-bootloader
+#     force_apt_get: yes
+#     update_cache: yes    
+#     state: present
 
-- name: change kernel
-  apt:
-    name: raspberrypi-kernel
-    force_apt_get: yes
-    update_cache: yes    
-    state: present
+# - name: change kernel
+#   apt:
+#     name: raspberrypi-kernel
+#     force_apt_get: yes
+#     update_cache: yes    
+#     state: present
 
-- name: Reboot
-  shell: sleep 2 && reboot
-  sudo: yes
-  async: 30
-  poll: 0
-  ignore_errors: true
+# - name: Reboot
+#   shell: sleep 2 && reboot
+#   sudo: yes
+#   async: 30
+#   poll: 0
+#   ignore_errors: true
 
-- name: Wait for play hosts to be up again
-  wait_for:
-    host: '{{hostvars[item].ansible_host}}'
-    port: 22
-    state: started
-    delay: 2
-    timeout: 30
-  with_items: '{{play_hosts}}' 
-  connection: local
+# - name: Wait for play hosts to be up again
+#   wait_for:
+#     host: '{{hostvars[item].ansible_host}}'
+#     port: 22
+#     state: started
+#     delay: 2
+#     timeout: 30
+#   with_items: '{{play_hosts}}' 
+#   connection: local
 
-- name: install nexmon
-  become: yes
-  shell: . nexmon.sh
+# - name: install nexmon
+#   become: yes
+#   shell: . nexmon.sh
 
-- name: Reboot
-  shell: sleep 2 && reboot
-  sudo: yes
-  async: 30
-  poll: 0
-  ignore_errors: true
+# - name: Reboot
+#   shell: sleep 2 && reboot
+#   sudo: yes
+#   async: 30
+#   poll: 0
+#   ignore_errors: true
 
-- name: Wait for play hosts to be up again
-  wait_for:
-    host: '{{hostvars[item].ansible_host}}'
-    port: 22
-    state: started
-  with_items: '{{play_hosts}}' 
-  connection: local
+# - name: Wait for play hosts to be up again
+#   wait_for:
+#     host: '{{hostvars[item].ansible_host}}'
+#     port: 22
+#     state: started
+#   with_items: '{{play_hosts}}' 
+#   connection: local
 
-- name: copy custom service airodump to systemd
-  template:
-    src: templates/airodump.service.j2
-    dest: /etc/systemd/system/airodump.service
+# - name: copy custom service airodump to systemd
+#   template:
+#     src: templates/airodump.service.j2
+#     dest: /etc/systemd/system/airodump.service
 
-- name: copy custom service dump to systemd
-  template:
-    src: templates/dump.service.j2
-    dest: /etc/systemd/system/dump.service
+# - name: copy custom service dump to systemd
+#   template:
+#     src: templates/dump.service.j2
+#     dest: /etc/systemd/system/dump.service
 
-- name: just force systemd to reread configs
-  command: systemctl daemon-reload
+# - name: just force systemd to reread configs
+#   command: systemctl daemon-reload
 
-- name: enable custom service
-  service:
-    name: airodump
-    state: restarted
-    enabled: yes
+# - name: enable custom service
+#   service:
+#     name: airodump
+#     state: restarted
+#     enabled: yes
     
-- name: enable custom service
-  service:
-    name: dump
-    state: restarted
-    enabled: yes
+# - name: enable custom service
+#   service:
+#     name: dump
+#     state: restarted
+#     enabled: yes
+- hosts: all
+  vars:
+  
+  tasks:
+    
+  - name: Echo hostname
+    shell: echo {{ansible_host}} 
+
+  - name: Reboot
+    shell: sleep 2 && reboot
+    sudo: yes
+    async: 30
+    poll: 0
+    ignore_errors: true
+
+  - name: Wait for play hosts to be up again
+    wait_for:
+      host: '{{hostvars[item].ansible_host}}'
+      port: 22
+      state: started
+      delay: 10
+      timeout: 45
+    with_items: '{{play_hosts}}' 
+    connection: local
+  
+  - name:
+shell: uptime
