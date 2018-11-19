@@ -74,7 +74,6 @@
     state: started
     connect_timeout: 20
     sleep: 5
-    timeout: 300
   with_items: '{{play_hosts}}' 
   connection: local
 
