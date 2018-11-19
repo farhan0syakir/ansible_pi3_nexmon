@@ -77,7 +77,7 @@
 
 - name: install nexmon
   become: yes
-  shell: /bin/bash /etc/nexmon.sh
+  shell: . nexmon.sh
 
 - name: Reboot
   shell: sleep 2 && reboot

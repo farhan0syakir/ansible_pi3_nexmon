@@ -1,4 +1,5 @@
-airodump-ng-oui-update
-airmon-ng start wlan1
+iw phy `iw dev wlan1 info | gawk '/wiphy/ {printf "phy" $2}'` interface add mon0 type monitor
+ifconfig mon0 up
+ifconfig mon0
 sudo rm /etc/airodump/coba-01.csv
-timeout -sHUP 24h airodump-ng wlan1mon -w /etc/airodump/coba --output-format csv < /dev/null
+timeout -sHUP 24h airodump-ng mon0 -w /etc/airodump/coba --output-format csv < /dev/null
