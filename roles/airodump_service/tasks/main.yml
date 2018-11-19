@@ -132,13 +132,8 @@
 
 - name: Wait for play hosts to be up again
   wait_for:
-    host: '{{hostvars[item].ansible_host}}'
-    port: 22
-    state: started
     delay: 10
     timeout: 45
-  with_items: '{{play_hosts}}' 
-  connection: local
   
 - name:
   shell: uptime
