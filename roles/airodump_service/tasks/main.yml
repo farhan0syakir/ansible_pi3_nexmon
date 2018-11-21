@@ -62,6 +62,7 @@
 
 - name: restart machine after change kernel
   reboot:
+    reboot_timeout: 3600
   
 - name: sleep for 300 seconds and continue with play
   wait_for: timeout=300
