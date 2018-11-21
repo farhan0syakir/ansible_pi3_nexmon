@@ -60,9 +60,12 @@
     update_cache: yes    
     state: present
 
-- name: restart machine after change kernel
-  reboot:
-    reboot_timeout: 3600
+- name: Reboot
+  shell: sleep 2 && reboot
+  sudo: yes
+  async: 30
+  poll: 0
+  ignore_errors: true
   
 - name: sleep for 300 seconds and continue with play
   wait_for: timeout=300
