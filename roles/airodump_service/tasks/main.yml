@@ -62,8 +62,6 @@
 
 - name: restart machine after change kernel
   shell: reboot
-  async: 0
-  poll: 0
   
 - name: waiting for server to come back
   local_action: wait_for host={{ hostvars[item].ansible_host }} state=started
