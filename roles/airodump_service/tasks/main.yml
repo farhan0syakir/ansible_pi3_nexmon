@@ -61,12 +61,12 @@
     state: present
 
 - name: restart machine after change kernel
-  shell: reboot
+  reboot:
   
 - name: sleep for 300 seconds and continue with play
   wait_for: timeout=300
   delegate_to: localhost
-  
+
 - name: install nexmon
   become: yes
   shell: . nexmon.sh
