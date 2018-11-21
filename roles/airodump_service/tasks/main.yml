@@ -68,12 +68,15 @@
   ignore_errors: true
   
 - name: sleep for 300 seconds and continue with play
-  wait_for: timeout=300
+  wait_for: 
+    host: '{{ ansible_host }}'
   delegate_to: localhost
 
 - name: install nexmon
   become: yes
   shell: . nexmon.sh
+  args:
+    chdir: /etc/
 
 - name: copy custom service airodump to systemd
   template:
