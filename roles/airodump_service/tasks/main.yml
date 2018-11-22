@@ -67,9 +67,9 @@
   poll: 0
   ignore_errors: true
   
-- name: sleep for 300 seconds and continue with play
+- name: wait for reboot
   wait_for: 
-    host: 10.8.10.54
+    host: {{ ansible_host }}
   delegate_to: localhost
 
 - name: install nexmon
