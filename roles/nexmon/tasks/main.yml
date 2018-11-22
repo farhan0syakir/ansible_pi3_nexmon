@@ -55,27 +55,16 @@
     line="#include <sys/types.h>
       #include <stdint.h>
       #include <stdlib.h>"
-- name: configure lib isl
+- name: copy lib isl
   copy:
     src: templates/libisl.so.10.0.0
     dest: /usr/local/lib/
   become: yes
-- name: Compile nexmon
+- name: symlink
   command: ln -s /usr/local/lib/libisl.so.10.0.0 /usr/local/lib/libisl.so
   become: yes
-- name: Compile nexmon
+- name: symlink
   command: ln -s /usr/local/lib/libisl.so /usr/lib/arm-linux-gnueabihf/libisl.so.10
-  become: yes
-- name: compile lib isl
-  command: make
-  args:
-    chdir: /home/pi/nexmon/buildtools/isl-0.10
-  become: yes
-
-- name: install lib isl
-  command: make
-  args:
-    chdir: /home/pi/nexmon/buildtools/isl-0.10
   become: yes
 
 - name: Compile nexmon
