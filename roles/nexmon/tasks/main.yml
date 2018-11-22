@@ -84,7 +84,7 @@
 
 - name: Reboot
   shell: sleep 2 && reboot
-  sudo: yes
+  become: yes
   async: 30
   poll: 0
   ignore_errors: true
