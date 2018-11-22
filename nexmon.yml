@@ -75,7 +75,7 @@
     args:
       chdir: /home/pi/nexmon
   - name: Compila el software nexmon, bcm43430a1 chipset
-    command: make -j4
+    command: make 
     args:
       chdir: /home/pi/nexmon/patches/bcm43430a1/7_45_41_46/nexmon/
     become: yes
@@ -90,7 +90,7 @@
       chdir: /home/pi/nexmon/patches/bcm43430a1/7_45_41_46/nexmon/
     become: yes
   - name: Compila utilizario nextutil para software nexmon
-    command: make -j4
+    command: make 
     args:
       chdir: /home/pi/nexmon/utilities/nexutil
     become: yes
