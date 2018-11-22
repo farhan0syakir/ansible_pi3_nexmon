@@ -78,12 +78,12 @@
     command: make -j4
     args:
       chdir: /home/pi/nexmon/patches/bcm43430a1/7_45_41_46/nexmon/
-    #    become: yes
+    become: yes
   - name: Realiza respaldo de firmware, bcm43430a1 chipset
     command: make backup-firmware
     args:
       chdir: /home/pi/nexmon/patches/bcm43430a1/7_45_41_46/nexmon/
-    #    become: yes
+    become: yes
   - name: Instala nuevo firmware, bcm43430a1 chipset
     command: make install-firmware
     args:
@@ -93,7 +93,7 @@
     command: make -j4
     args:
       chdir: /home/pi/nexmon/utilities/nexutil
-    #    become: yes
+    become: yes
   - name: Instala utilizario nextutil para software nexmon
     command: make install
     args:
