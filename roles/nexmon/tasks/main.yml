@@ -70,16 +70,20 @@
   become: yes
   ignore_errors: true
 
-- name: reinstall bootloader
-  apt:
-    name: "{{ packages }}"
-    force_apt_get: yes
-    update_cache: yes    
-    state: present
-  vars:
-    packages:
-    - raspberrypi-bootloader
-    - raspberrypi-kernel
+# - name: reinstall bootloader
+#   apt:
+#     name: "{{ packages }}"
+#     force_apt_get: yes
+#     update_cache: yes    
+#     state: present
+#   vars:
+#     packages:
+#     - raspberrypi-bootloader
+#     - raspberrypi-kernel
+#   become: yes
+
+- name: update to 4.14.79
+  shell: sudo rpi-update 2267b322afdb18b4abf9603fea836916190b1b5d
   become: yes
 
 - name: Reboot
@@ -89,7 +93,7 @@
   poll: 0
   ignore_errors: true
   
-- name: Wait 300 seconds, but only start checking after 60 seconds
+- name: Wait for connection
   wait_for_connection:
     timeout: 120
 
