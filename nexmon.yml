@@ -75,14 +75,19 @@
     command: ./configure
     args:
       chdir: /home/pi/nexmon/buildtools/isl-0.10
+    become: yes
   - name: compile lib isl
     command: make
     args:
       chdir: /home/pi/nexmon/buildtools/isl-0.10
+    become: yes
+
   - name: install lib isl
     command: make
     args:
       chdir: /home/pi/nexmon/buildtools/isl-0.10
+    become: yes
+
   - name: Compile nexmon
     command: make
     args:
