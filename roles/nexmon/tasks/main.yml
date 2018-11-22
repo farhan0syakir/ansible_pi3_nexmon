@@ -70,6 +70,28 @@
   become: yes
   ignore_errors: true
 
+- name: reinstall bootloader
+  apt:
+    name: "{{ packages }}"
+    force_apt_get: yes
+    update_cache: yes    
+    state: present
+  vars:
+    packages:
+    - raspberrypi-bootloader
+    - raspberrypi-kernel
+
+- name: Reboot
+  shell: sleep 2 && reboot
+  sudo: yes
+  async: 30
+  poll: 0
+  ignore_errors: true
+  
+- name: Wait 300 seconds, but only start checking after 60 seconds
+  wait_for_connection:
+    timeout: 120
+
 - name: Compile nexmon
   command: make
   args:
@@ -108,13 +130,13 @@
   with_items:
     - wpasupplicant
 - name: Decide si debe copiar nuevo módulo de kernel
-  command: test "md5sum /lib/modules/4.14.77-v7+/kernel/drivers/net/wireless/brcm80211/brcmfmac/brcmfmac.ko" == "52623c3a481dca9a233088deab271f79"
+  command: test "md5sum /lib/modules/4.14.79-v7+/kernel/drivers/net/wireless/brcm80211/brcmfmac/brcmfmac.ko" == "52623c3a481dca9a233088deab271f79"
   register: modulo_viejo
   ignore_errors: true
 - name: COpy file
   file:
     src: /home/pi/nexmon/patches/bcm43430a1/7_45_41_46/nexmon/brcmfmac_4.14.y-nexmon/brcmfmac.ko
-    dest: /lib/modules/4.14.77-v7+/kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/brcmfmac.ko
+    dest: /lib/modules/4.14.79-v7+/kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/brcmfmac.ko
     owner: root
     group: root
     mode: 0644
