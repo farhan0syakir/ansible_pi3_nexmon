@@ -107,13 +107,13 @@
     with_items:
       - wpasupplicant
   - name: Decide si debe copiar el nuevo módulo de kernel
-    command: test "md5sum /lib/modules/4.4.34-v7+/kernel/drivers/net/wireless/brcm80211/brcmfmac/brcmfmac.ko" == "52623c3a481dca9a233088deab271f79"
+    command: test "md5sum /lib/modules/4.14.77-v7+/kernel/drivers/net/wireless/brcm80211/brcmfmac/brcmfmac.ko" == "52623c3a481dca9a233088deab271f79"
     register: modulo_viejo
     ignore_errors: true
   - name: Respalda viejo driver de kernel
     file:
       src: /home/pi/nexmon/patches/bcm43430a1/7_45_41_46/nexmon/brcmfmac/brcmfmac.ko
-      dest: /lib/modules/4.4.34-v7+/kernel/drivers/net/wireless/brcm80211/brcmfmac/brcmfmac.ko
+      dest: /lib/modules/4.14.77-v7+/kernel/drivers/net/wireless/brcm80211/brcmfmac/brcmfmac.ko
       owner: root
       group: root
       mode: 0644
