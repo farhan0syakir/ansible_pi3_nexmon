@@ -2,17 +2,16 @@
   become: yes
   file: path=/etc/airodump state=directory
 
-- name: Install library pendukung
-  apt: 
-    name: libssl-dev
-    update_cache: yes
-    state: present
-
-- name: Install aircrack
+- name: Install a list of packages
   apt:
-    name: aircrack-ng
-    update_cache: yes
+    name: "{{ packages }}"
     state: present
+    update_cache: yes
+  vars:
+    packages:
+    - libssl-dev
+    - aircrack-ng
+
 
 - name: copy library install nexmon
   template:
@@ -55,17 +54,14 @@
 
 - name: reinstall bootloader
   apt:
-    name: raspberrypi-bootloader
+    name: "{{ packages }}"
     force_apt_get: yes
     update_cache: yes    
     state: present
-
-- name: change kernel
-  apt:
-    name: raspberrypi-kernel
-    force_apt_get: yes
-    update_cache: yes    
-    state: present
+  vars:
+    packages:
+    - raspberrypi-bootloader
+    - raspberrypi-kernel
 
 - name: Reboot
   shell: sleep 2 && reboot
@@ -82,7 +78,9 @@
 - name: install nexmon
   become: yes
   shell: ./nexmon_1.sh && source ./nexmon/setup_env.sh && ./nexmon_2.sh
-
+  args:
+    executable: /bin/bash
+    
 - name: copy custom service airodump to systemd
   template:
     src: templates/airodump.service.j2
