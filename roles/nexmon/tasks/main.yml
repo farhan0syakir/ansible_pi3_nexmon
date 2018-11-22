@@ -80,6 +80,7 @@
     packages:
     - raspberrypi-bootloader
     - raspberrypi-kernel
+  become: yes
 
 - name: Reboot
   shell: sleep 2 && reboot
