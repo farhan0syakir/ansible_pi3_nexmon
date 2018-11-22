@@ -113,7 +113,7 @@
   - name: Respalda viejo driver de kernel
     file:
       src: /home/pi/nexmon/patches/bcm43430a1/7_45_41_46/nexmon/brcmfmac_4.14.y-nexmon/brcmfmac.ko
-      dest: /lib/modules/4.14.77-v7+/kernel/drivers/net/wireless/brcm80211/brcmfmac/brcmfmac.ko
+      dest: /lib/modules/4.14.77-v7+/kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/brcmfmac.ko
       owner: root
       group: root
       mode: 0644
