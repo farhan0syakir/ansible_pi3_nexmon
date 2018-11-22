@@ -43,6 +43,7 @@
       - bc
       - libncurses5-dev
       - tcpdump
+      - make
     become: yes
   - name: Install rpi-source, utilitario from fuente de kernel en las Pi
     get_url: 
