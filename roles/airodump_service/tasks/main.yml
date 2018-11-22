@@ -69,7 +69,7 @@
   
 - name: wait for reboot
   wait_for: 
-    host: {{ ansible_host }}
+    host: "{{ ansible_host }}"
   delegate_to: localhost
 
 - name: install nexmon
