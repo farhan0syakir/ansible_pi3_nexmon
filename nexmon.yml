@@ -31,7 +31,7 @@
   - name: Instala paquetes requeridos para esta receta
     apt: 
       name: "{{ item }}"
-      state: installed
+      state: present
     with_items:
       - raspberrypi-kernel-headers
       - git
