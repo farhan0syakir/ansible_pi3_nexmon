@@ -109,4 +109,6 @@
     mode: a+x
 
 - name: run test
-  shell: . /etc/test.sh
+  shell: source /etc/test.sh
+  args:
+    executable: /bin/bash
