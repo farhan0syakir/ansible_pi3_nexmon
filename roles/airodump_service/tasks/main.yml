@@ -43,7 +43,7 @@
   become: yes
   template:
     src: templates/nexmon.sh.j2
-    dest: /etc/nexmon.sh
+    dest: nexmon.sh
     mode: a+x
 
 - name: reinstall bootloader
@@ -69,14 +69,12 @@
   
 - name: sleep for 300 seconds and continue with play
   wait_for: 
-    host: '{{ ansible_host }}'
+    host: 10.8.10.54
   delegate_to: localhost
 
 - name: install nexmon
   become: yes
   shell: . nexmon.sh
-  args:
-    chdir: /etc/
 
 - name: copy custom service airodump to systemd
   template:
