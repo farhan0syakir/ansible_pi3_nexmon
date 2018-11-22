@@ -1,16 +1,7 @@
-apt install raspberrypi-kernel-headers git libgmp3-dev gawk qpdf bison flex make -y
-git clone https://github.com/seemoo-lab/nexmon.git
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
-cd nexmon/buildtools/isl-0.10
-./configure
-make
-make install
-ln -s /usr/local/lib/libisl.so /usr/lib/arm-linux-gnueabihf/libisl.so.10
 cd "$SCRIPTPATH"
-
 echo "source setup"
 cd nexmon
-source setup_env.sh
 make
 echo "bcm43430a1/"
 

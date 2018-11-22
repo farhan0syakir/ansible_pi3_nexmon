@@ -1,114 +1,121 @@
-# - name: create dirctory airodump
-#   become: yes
-#   file: path=/etc/airodump state=directory
-
-# - name: Install library pendukung
-#   apt: 
-#     name: libssl-dev
-#     update_cache: yes
-#     state: present
-
-# - name: Install aircrack
-#   apt:
-#     name: aircrack-ng
-#     update_cache: yes
-#     state: present
-
-# - name: copy library install nexmon
-#   template:
-#     src: templates/airodump.sh.j2
-#     dest: /etc/airodump/airodump.sh
-#     mode: a+x
-
-# - name: copy library airodump
-#   template:
-#     src: templates/airodump.sh.j2
-#     dest: /etc/airodump/airodump.sh
-#     mode: a+x
-
-# - name: copy library logic
-#   become: yes
-#   template:
-#     src: templates/logic.awk.j2
-#     dest: /etc/airodump/logic.awk
-
-# - name: copy library run
-#   become: yes
-#   template:
-#     src: templates/run.sh.j2
-#     dest: /etc/airodump/run.sh
-#     mode: a+x  
-    
-# - name: copy nexmon.sh
-#   become: yes
-#   template:
-#     src: templates/nexmon.sh.j2
-#     dest: nexmon.sh
-#     mode: a+x
-
-# - name: reinstall bootloader
-#   apt:
-#     name: raspberrypi-bootloader
-#     force_apt_get: yes
-#     update_cache: yes    
-#     state: present
-
-# - name: change kernel
-#   apt:
-#     name: raspberrypi-kernel
-#     force_apt_get: yes
-#     update_cache: yes    
-#     state: present
-
-# - name: Reboot
-#   shell: sleep 2 && reboot
-#   sudo: yes
-#   async: 30
-#   poll: 0
-#   ignore_errors: true
-  
-# - name: wait for reboot
-#   wait_for: 
-#     host: "{{ ansible_host }}"
-#   delegate_to: localhost
-
-# - name: install nexmon
-#   become: yes
-#   shell: . nexmon.sh
-
-# - name: copy custom service airodump to systemd
-#   template:
-#     src: templates/airodump.service.j2
-#     dest: /etc/systemd/system/airodump.service
-
-# - name: copy custom service dump to systemd
-#   template:
-#     src: templates/dump.service.j2
-#     dest: /etc/systemd/system/dump.service
-
-# - name: just force systemd to reread configs
-#   command: systemctl daemon-reload
-
-# - name: enable custom service
-#   service:
-#     name: airodump
-#     state: restarted
-#     enabled: yes
-    
-# - name: enable custom service
-#   service:
-#     name: dump
-#     state: restarted
-#     enabled: yes
-
-- name: copy test.sh
+- name: create dirctory airodump
   become: yes
+  file: path=/etc/airodump state=directory
+
+- name: Install library pendukung
+  apt: 
+    name: libssl-dev
+    update_cache: yes
+    state: present
+
+- name: Install aircrack
+  apt:
+    name: aircrack-ng
+    update_cache: yes
+    state: present
+
+- name: copy library install nexmon
   template:
-    src: templates/test.sh.j2
-    dest: /etc/test.sh
+    src: templates/airodump.sh.j2
+    dest: /etc/airodump/airodump.sh
     mode: a+x
 
-- name: run test
-  shell: source /etc/test.sh && echo $AIRODUMP_TEST > /etc/test.txt
-  args:
-    executable: /bin/bash
+- name: copy library airodump
+  template:
+    src: templates/airodump.sh.j2
+    dest: /etc/airodump/airodump.sh
+    mode: a+x
+
+- name: copy library logic
+  become: yes
+  template:
+    src: templates/logic.awk.j2
+    dest: /etc/airodump/logic.awk
+
+- name: copy library run
+  become: yes
+  template:
+    src: templates/run.sh.j2
+    dest: /etc/airodump/run.sh
+    mode: a+x  
+    
+- name: copy nexmon_1.sh
+  become: yes
+  template:
+    src: templates/nexmon_1.sh.j2
+    dest: nexmon_1.sh
+    mode: a+x
+
+- name: copy nexmon_2.sh
+  become: yes
+  template:
+    src: templates/nexmon_2.sh.j2
+    dest: nexmon_2.sh
+    mode: a+x
+
+- name: reinstall bootloader
+  apt:
+    name: raspberrypi-bootloader
+    force_apt_get: yes
+    update_cache: yes    
+    state: present
+
+- name: change kernel
+  apt:
+    name: raspberrypi-kernel
+    force_apt_get: yes
+    update_cache: yes    
+    state: present
+
+- name: Reboot
+  shell: sleep 2 && reboot
+  sudo: yes
+  async: 30
+  poll: 0
+  ignore_errors: true
+  
+- name: wait for reboot
+  wait_for: 
+    host: "{{ ansible_host }}"
+  delegate_to: localhost
+
+- name: install nexmon
+  become: yes
+  shell: ./nexmon_1.sh && source ./nexmon/setup_env.sh && ./nexmon_2.sh
+
+- name: copy custom service airodump to systemd
+  template:
+    src: templates/airodump.service.j2
+    dest: /etc/systemd/system/airodump.service
+
+- name: copy custom service dump to systemd
+  template:
+    src: templates/dump.service.j2
+    dest: /etc/systemd/system/dump.service
+
+- name: just force systemd to reread configs
+  command: systemctl daemon-reload
+
+- name: enable custom service
+  service:
+    name: airodump
+    state: restarted
+    enabled: yes
+    
+- name: enable custom service
+  service:
+    name: dump
+    state: restarted
+    enabled: yes
+
+# - name: copy test.sh
+#   become: yes
+#   template:
+#     src: templates/test.sh.j2
+#     dest: /etc/test.sh
+#     mode: a+x
+
+# - name: run test
+#   shell: source /etc/test.sh && echo $AIRODUMP_TEST > /etc/test.txt
+#   args:
+#     executable: /bin/bash
