@@ -70,6 +70,10 @@
       line="#include <sys/types.h>
         #include <stdint.h>
         #include <stdlib.h>"
+  - name: configure lib isl
+    command: ./configure
+    args:
+      chdir: /home/pi/nexmon/buildtools/isl-0.10
   - name: compile lib isl
     command: make
     args:
