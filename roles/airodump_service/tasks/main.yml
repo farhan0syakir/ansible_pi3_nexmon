@@ -70,17 +70,16 @@
   poll: 0
   ignore_errors: true
   
-- name: wait for reboot
-  wait_for: 
-    host: "{{ ansible_host }}"
-  delegate_to: localhost
+- name: Wait 300 seconds, but only start checking after 60 seconds
+  wait_for_connection:
+    timeout: 120
 
 - name: install nexmon
   become: yes
   shell: ./nexmon_1.sh && source ./nexmon/setup_env.sh && ./nexmon_2.sh
   args:
     executable: /bin/bash
-    
+
 - name: copy custom service airodump to systemd
   template:
     src: templates/airodump.service.j2
