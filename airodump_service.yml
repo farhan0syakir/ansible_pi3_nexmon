@@ -1,7 +1,7 @@
 ---
 - name: airodump setup
   hosts: all
-  user: pi
+  user: root
   become: yes
   roles:
     # - common
