@@ -74,20 +74,20 @@
     command: make
     args:
       chdir: /home/pi/nexmon
-  - name: Compila el software nexmon, bcm43438 chipset
+  - name: Compila el software nexmon, bcm43430a1 chipset
     command: make -j4
     args:
-      chdir: /home/pi/nexmon/patches/bcm43438/7_45_41_26/nexmon/
+      chdir: /home/pi/nexmon/patches/bcm43430a1/7_45_41_46/nexmon/
     #    become: yes
-  - name: Realiza respaldo de firmware, bcm43438 chipset
+  - name: Realiza respaldo de firmware, bcm43430a1 chipset
     command: make backup-firmware
     args:
-      chdir: /home/pi/nexmon/patches/bcm43438/7_45_41_26/nexmon/
+      chdir: /home/pi/nexmon/patches/bcm43430a1/7_45_41_46/nexmon/
     #    become: yes
-  - name: Instala nuevo firmware, bcm43438 chipset
+  - name: Instala nuevo firmware, bcm43430a1 chipset
     command: make install-firmware
     args:
-      chdir: /home/pi/nexmon/patches/bcm43438/7_45_41_26/nexmon/
+      chdir: /home/pi/nexmon/patches/bcm43430a1/7_45_41_46/nexmon/
     become: yes
   - name: Compila utilizario nextutil para software nexmon
     command: make -j4
@@ -112,7 +112,7 @@
     ignore_errors: true
   - name: Respalda viejo driver de kernel
     file:
-      src: /home/pi/nexmon/patches/bcm43438/7_45_41_26/nexmon/brcmfmac/brcmfmac.ko
+      src: /home/pi/nexmon/patches/bcm43430a1/7_45_41_46/nexmon/brcmfmac/brcmfmac.ko
       dest: /lib/modules/4.4.34-v7+/kernel/drivers/net/wireless/brcm80211/brcmfmac/brcmfmac.ko
       owner: root
       group: root
