@@ -63,9 +63,12 @@
 - name: symlink
   command: ln -s /usr/local/lib/libisl.so.10.0.0 /usr/local/lib/libisl.so
   become: yes
+  ignore_errors: true
+
 - name: symlink
   command: ln -s /usr/local/lib/libisl.so /usr/lib/arm-linux-gnueabihf/libisl.so.10
   become: yes
+  ignore_errors: true
 
 - name: Compile nexmon
   command: make
