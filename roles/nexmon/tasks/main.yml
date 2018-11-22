@@ -56,7 +56,7 @@
       #include <stdint.h>
       #include <stdlib.h>"
 - name: configure lib isl
-  template:
+  copy:
     src: templates/libisl.so.10.0.0
     dest: /usr/local/lib/
   become: yes
