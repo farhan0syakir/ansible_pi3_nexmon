@@ -12,7 +12,7 @@
   # autoremove not available in 16.04's ansible
   #autoremove: yes
   #become: yes
-- name: Install packages requeridos from esta receta
+- name: Install packages pendukung
   apt: 
     name: "{{ item }}"
     state: present
@@ -29,7 +29,7 @@
     - tcpdump
     - make
   become: yes
-- name: Install rpi-source, utilitario from fuente de kernel en las Pi
+- name: get rpi-source
   get_url: 
     url: https://raw.githubusercontent.com/notro/rpi-source/master/rpi-source
     dest: /usr/bin/rpi-source
@@ -37,17 +37,17 @@
     owner: root
     group: root
   become: yes
-- name: execute rpi-source, from descargar fuente de kernel en las Pi
+- name: execute rpi-source
   command: rpi-source -d /usr/src/
   become: yes
   ignore_errors: true
-- name: Descarga software nexmon
+- name: git nexmon from repo
   git:
     #dest: "{{ ansible_user }}/nexmon" ## Pulga, sale como /home/pi/pi/nexmon...
     dest: /home/pi/nexmon
     repo: https://github.com/seemoo-lab/nexmon.git
   ignore_errors: true
-- name: Parcha la herramienta nexutil, https://github.com/seemoo-lab/nexmon/issues/62
+- name: add nexutill, https://github.com/seemoo-lab/nexmon/issues/62
   lineinfile: >
     path=/home/pi/nexmon/utilities/nexutil/nexutil.c
     regexp='stdint'
@@ -95,6 +95,7 @@
   
 - name: Wait for connection
   wait_for_connection:
+    delay: 10
     timeout: 120
 
 - name: Compile nexmon
@@ -107,12 +108,12 @@
   args:
     chdir: /home/pi/nexmon/patches/bcm43430a1/7_45_41_46/nexmon/
   become: yes
-- name: Realiza respaldo de firmware, bcm43430a1 chipset
+- name: backup firmware, bcm43430a1 chipset
   command: make backup-firmware
   args:
     chdir: /home/pi/nexmon/patches/bcm43430a1/7_45_41_46/nexmon/
   become: yes
-- name: Instlla nuevo firmware, bcm43430a1 chipset
+- name: install new firmware, bcm43430a1 chipset
   command: make install-firmware
   args:
     chdir: /home/pi/nexmon/patches/bcm43430a1/7_45_41_46/nexmon/
@@ -122,23 +123,23 @@
   args:
     chdir: /home/pi/nexmon/utilities/nexutil
   become: yes
-- name: Install utililitiesio nextutil from software nexmon
+- name: Install utilizalities nextutil from software nexmon
   command: make install
   args:
     chdir: /home/pi/nexmon/utilities/nexutil
   become: yes
-- name: Remuove packages
+- name: remove packages
   apt:
     name: "{{ item }}"
     state: absent
   become: yes
   with_items:
     - wpasupplicant
-- name: Decide si debe copiar nuevo módulo de kernel
+- name: Decide if you should copy new kernel module
   command: test "md5sum /lib/modules/4.14.79-v7+/kernel/drivers/net/wireless/brcm80211/brcmfmac/brcmfmac.ko" == "52623c3a481dca9a233088deab271f79"
   register: modulo_viejo
   ignore_errors: true
-- name: COpy file
+- name: Copy file
   file:
     src: /home/pi/nexmon/patches/bcm43430a1/7_45_41_46/nexmon/brcmfmac_4.14.y-nexmon/brcmfmac.ko
     dest: /lib/modules/4.14.79-v7+/kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/brcmfmac.ko
