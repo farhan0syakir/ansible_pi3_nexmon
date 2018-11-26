@@ -118,12 +118,12 @@
   args:
     chdir: /home/pi/nexmon/patches/bcm43430a1/7_45_41_46/nexmon/
   become: yes
-- name: Compile utilizalities nextutil from software nexmon
+- name: Compile utilities nextutil from software nexmon
   command: make 
   args:
     chdir: /home/pi/nexmon/utilities/nexutil
   become: yes
-- name: Install utilizalities nextutil from software nexmon
+- name: Install utilities nextutil from software nexmon
   command: make install
   args:
     chdir: /home/pi/nexmon/utilities/nexutil
