@@ -135,10 +135,10 @@
   become: yes
   with_items:
     - wpasupplicant
-- name: Decide if you should copy new kernel module
-  command: test "md5sum /lib/modules/4.14.79-v7+/kernel/drivers/net/wireless/brcm80211/brcmfmac/brcmfmac.ko" == "52623c3a481dca9a233088deab271f79"
-  register: modulo_viejo
-  ignore_errors: true
+# - name: Decide if you should copy new kernel module
+#   command: test "md5sum /lib/modules/4.14.79-v7+/kernel/drivers/net/wireless/brcm80211/brcmfmac/brcmfmac.ko" == "52623c3a481dca9a233088deab271f79"
+#   register: modulo_viejo
+#   ignore_errors: true
 - name: Copy file
   file:
     src: /home/pi/nexmon/patches/bcm43430a1/7_45_41_46/nexmon/brcmfmac_4.14.y-nexmon/brcmfmac.ko
@@ -147,8 +147,8 @@
     group: root
     mode: 0644
   become: yes
-  when: modulo_viejo.changed
+  # when: modulo_viejo.changed
 - name: execute depmod
   command: depmod -a
   become: yes
-  when: modulo_viejo.changed
+  # when: modulo_viejo.changed
