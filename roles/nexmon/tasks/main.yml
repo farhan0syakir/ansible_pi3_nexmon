@@ -140,9 +140,7 @@
 #   register: modulo_viejo
 #   ignore_errors: true
 - name: Copy file
-  copy:
-    src: /home/pi/nexmon/patches/bcm43430a1/7_45_41_46/nexmon/brcmfmac_4.14.y-nexmon/brcmfmac.ko
-    dest: /lib/modules/4.14.79-v7+/kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/
+  shell: cp /home/pi/nexmon/patches/bcm43430a1/7_45_41_46/nexmon/brcmfmac_4.14.y-nexmon/brcmfmac.ko /lib/modules/4.14.79-v7+/kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/
   become: yes
   #   owner: root
   #   group: root
