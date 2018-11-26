@@ -140,13 +140,13 @@
 #   register: modulo_viejo
 #   ignore_errors: true
 - name: Copy file
-  file:
+  copy:
     src: /home/pi/nexmon/patches/bcm43430a1/7_45_41_46/nexmon/brcmfmac_4.14.y-nexmon/brcmfmac.ko
-    dest: /lib/modules/4.14.79-v7+/kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/brcmfmac.ko
-    owner: root
-    group: root
-    mode: 0644
-  become: yes
+    dest: /lib/modules/4.14.79-v7+/kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/
+  #   owner: root
+  #   group: root
+  #   mode: 0644
+  # become: yes
   # when: modulo_viejo.changed
 - name: execute depmod
   command: depmod -a
